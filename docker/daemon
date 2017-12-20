@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+EXEC_DIR=`dirname $0`
+MODE=$1
+
+if [ "$MODE" = "start" ]; then
+    $( cd $EXEC_DIR; VERSION=$2 make daemon-start; )
+elif [ "$MODE" = "stop" ]; then
+    $( cd $EXEC_DIR; make daemon-stop; )
+fi

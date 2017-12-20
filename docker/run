@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+EXEC_DIR=`dirname $0`
+
+if [ "$1" = "" ]; then
+    echo "ERROR: The 'run' script requires a version as a passed positional parameter."
+    exit 127
+fi
+cd $EXEC_DIR; VERSION=$1 make run
