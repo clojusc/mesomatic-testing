@@ -7,7 +7,6 @@ CONTAINER_ID_FILE=/tmp/clojusc-mesos-container-id
 build: $(VERSION)/Dockerfile $(VERSION)/build
 
 $(VERSION)/Dockerfile:
-	echo "Version: $(VERSION)"
 	mkdir -p $(VERSION)
 	cat warning.txt > $(VERSION)/Dockerfile
 	envsubst < Dockerfile.in >> $(VERSION)/Dockerfile
@@ -15,8 +14,16 @@ $(VERSION)/Dockerfile:
 .PHONY: $(VERSION)/build
 
 $(VERSION)/build:
-	echo "Version: $(VERSION)"
 	docker build -t $(DOCKER_ORG)/$(IMAGE_NAME):$(VERSION) ./$(VERSION)/
+
+.PHONY: push
+
+push: build $(VERSION)/push
+
+.PHONY: $(VERSION)/push
+
+$(VERSION)/build:
+	docker push $(DOCKER_ORG)/$(IMAGE_NAME):$(VERSION)
 
 .PHONY: run
 
