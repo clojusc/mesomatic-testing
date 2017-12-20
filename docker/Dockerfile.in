@@ -1,0 +1,7 @@
+FROM mesosphere/mesos:$VERSION
+MAINTAINER Clojure-Aided Enrichment Center <https://github.com/clojusc>
+
+ENV MESOS_WORK_DIR /root
+
+CMD ["mesos", "local", "--ip=0.0.0.0", "--log_dir=/tmp/mesos"]
+
