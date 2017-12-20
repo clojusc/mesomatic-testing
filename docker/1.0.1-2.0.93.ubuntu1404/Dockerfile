@@ -6,6 +6,7 @@ FROM mesosphere/mesos:1.0.1-2.0.93.ubuntu1404
 MAINTAINER Clojure-Aided Enrichment Center <https://github.com/clojusc>
 
 ENV MESOS_WORK_DIR /root
+EXPOSE 5050
 
 CMD ["mesos", "local", "--ip=0.0.0.0", "--log_dir=/tmp/mesos"]
 

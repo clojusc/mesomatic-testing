@@ -14,7 +14,9 @@ $(VERSION)/Dockerfile:
 .PHONY: $(VERSION)/build
 
 $(VERSION)/build:
-	docker build -t $(DOCKER_ORG)/$(IMAGE_NAME):$(VERSION) ./$(VERSION)/
+	docker build -t \
+				 $(DOCKER_ORG)/$(IMAGE_NAME):$(VERSION) \
+				 ./$(VERSION)/
 
 .PHONY: push
 
@@ -22,7 +24,7 @@ push: build $(VERSION)/push
 
 .PHONY: $(VERSION)/push
 
-$(VERSION)/build:
+$(VERSION)/push:
 	docker push $(DOCKER_ORG)/$(IMAGE_NAME):$(VERSION)
 
 .PHONY: run
@@ -32,7 +34,11 @@ run: build $(VERSION)/run
 .PHONY: $(VERSION)/run
 
 $(VERSION)/run:
-	-docker run -it $(DOCKER_ORG)/$(IMAGE_NAME):$(VERSION)
+	-rm $(CONTAINER_ID_FILE)
+	-docker run -it \
+	            -p 5050:5050 \
+	            --cidfile $(CONTAINER_ID_FILE) \
+	            $(DOCKER_ORG)/$(IMAGE_NAME):$(VERSION)
 
 .PHONY: daemon-start
 
@@ -43,10 +49,12 @@ daemon-start: build $(VERSION)/daemon-start
 
 $(VERSION)/daemon-start:
 	-rm $(CONTAINER_ID_FILE)
-	-docker run -d --cidfile $(CONTAINER_ID_FILE) \
+	-docker run -d \
+	            -p 5050:5050 \
+	            --cidfile $(CONTAINER_ID_FILE) \
 	            $(DOCKER_ORG)/$(IMAGE_NAME):$(VERSION)
 
-.PHONY: daemon-stop
+.PHONY: stop
 
-daemon-stop:
+stop:
 	docker stop `cat $(CONTAINER_ID_FILE)`

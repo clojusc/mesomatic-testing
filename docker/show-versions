@@ -2,4 +2,4 @@
 
 EXEC_DIR=`dirname $0`
 
-cd $EXEC_DIR; ls -1 */Dockerfile | sed 's|/Dockerfile||'
+cd $EXEC_DIR; find ./ -type d | sed 's|\./||' | sed '/^\s*$/d'
