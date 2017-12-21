@@ -21,16 +21,21 @@ RUN \
     chmod 755 lein && \
     mv lein /usr/local/bin && \
     ### Install mesomatic
+    cd /root && \
     git clone https://github.com/clojusc/mesomatic.git && \
     cd mesomatic && \
     git checkout 1.0.1-r1 && \
     lein test && \
     lein install && \
     ### Install mesomatic-testing
+    cd /root && \
     git clone https://github.com/clojusc/mesomatic-testing.git && \
     cd mesomatic-testing && \
     git checkout master && \
     lein test && \
-    lein install
+    lein install && \
+    ### Download mesomatic-examples
+    cd /root && \
+    git clone https://github.com/clojusc/mesomatic-examples.git
 
 CMD ["mesos", "local", "--ip=0.0.0.0", "--log_dir=/tmp/mesos"]
