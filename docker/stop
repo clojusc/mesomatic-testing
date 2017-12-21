@@ -2,4 +2,5 @@
 
 EXEC_DIR=`dirname $0`
 
-cd $EXEC_DIR; make stop;
+cd $EXEC_DIR
+make stop

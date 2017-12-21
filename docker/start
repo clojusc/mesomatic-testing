@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+EXEC_DIR=`dirname $0`
+
+if [ "$1" = "" ]; then
+    echo "ERROR: The 'run' script requires a version as a passed positional parameter."
+    exit 127
+fi
+
+cd $EXEC_DIR
+source versions
+
+export VERSION=$1
+export MESOS_VERSION=${MESOS_VERSIONS[$VERSION]}
+export MESOMATIC_VERSION=${MESOMATIC_VERSIONS[$VERSION]}
+export MESOMATIC_TESTING_VERSION=${MESOMATIC_TESTING_VERSIONS[$VERSION]}
+
+echo
+echo "Starting with ..."
+echo "  Primary version: $VERSION"
+echo "  Mesos version: $MESOS_VERSION"
+echo "  Mesomatic version: $MESOMATIC_VERSION"
+echo "  Mesomatic Testing version: $MESOMATIC_TESTING_VERSION"
+echo
+make start;

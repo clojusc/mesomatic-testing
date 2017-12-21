@@ -27,13 +27,13 @@ push: build $(VERSION)/push
 $(VERSION)/push:
 	docker push $(DOCKER_ORG)/$(IMAGE_NAME):$(VERSION)
 
-.PHONY: run
+.PHONY: start
 
-run: build $(VERSION)/run
+start: build $(VERSION)/start
 
-.PHONY: $(VERSION)/run
+.PHONY: $(VERSION)/start
 
-$(VERSION)/run:
+$(VERSION)/start:
 	-rm $(CONTAINER_ID_FILE)
 	-docker run -it \
 	            -p 5050:5050 \
@@ -53,6 +53,11 @@ $(VERSION)/daemon-start:
 	            -p 5050:5050 \
 	            --cidfile $(CONTAINER_ID_FILE) \
 	            $(DOCKER_ORG)/$(IMAGE_NAME):$(VERSION)
+
+.PHONY: shell
+
+shell:
+	docker exec -it `cat $(CONTAINER_ID_FILE)` bash
 
 .PHONY: stop
 
