@@ -5,8 +5,20 @@
 FROM mesosphere/mesos:1.0.1-2.0.93.ubuntu1404
 MAINTAINER Clojure-Aided Enrichment Center <https://github.com/clojusc>
 
+ENV DEBIAN_FRONTEND noninteractive
+ENV LEIN_JVM_OPTS -Dhttps.protocols=TLSv1.2
 ENV MESOS_WORK_DIR /root
 EXPOSE 5050
 
-CMD ["mesos", "local", "--ip=0.0.0.0", "--log_dir=/tmp/mesos"]
+RUN apt-get update -y && \
+    apt-get install -y curl && \
+    rm -rf /var/lib/apt/lists/* && \
+    curl -O https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein && \
+    chmod 755 lein && \
+    mv lein /usr/local/bin && \
+    git clone https://github.com/clojusc/mesomatic.git && \
+    cd mesomatic && \
+    git checkout 1.0.1-r1 && \
+    lein test
 
+CMD ["mesos", "local", "--ip=0.0.0.0", "--log_dir=/tmp/mesos"]
