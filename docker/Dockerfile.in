@@ -1,4 +1,4 @@
-FROM mesosphere/mesos:$VERSION
+FROM mesosphere/mesos:$MESOS_VERSION
 MAINTAINER Clojure-Aided Enrichment Center <https://github.com/clojusc>
 
 ENV MESOS_WORK_DIR /root
