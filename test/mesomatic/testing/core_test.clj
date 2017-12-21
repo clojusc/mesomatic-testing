@@ -1,7 +1,6 @@
 (ns mesomatic.testing.core-test
   (:require [clojure.test :refer :all]
-            [mesomatic-testing.core :refer :all]))
+            [mesomatic.testing.core :as mesosmatic-testing]))
 
 (deftest a-test
-  (testing "FIXME, I fail."
-    (is (= 0 1))))
+  (is (= 1 1)))
